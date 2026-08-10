@@ -9,6 +9,10 @@ export default function ParallaxBackground({ isBhaktiMode }: { isBhaktiMode?: bo
  useEffect(() => {
   const handleMouseMove = (e: MouseEvent) => {
    if (!bgRef.current) return;
+   
+   // Disable parallax on mobile/tablet views (less than 1024px width)
+   if (window.innerWidth < 1024) return;
+
    const x = (e.clientX / window.innerWidth - 0.5) * 20; // max 20px translation
    const y = (e.clientY / window.innerHeight - 0.5) * 20;
 
