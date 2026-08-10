@@ -33,7 +33,7 @@ export default function ParallaxBackground() {
      fill
      priority
      sizes="100vw"
-     className="object-cover object-[65%_center] sm:object-center"
+     className="object-cover object-[35%_center] sm:object-center"
     />
     {/* Subtle overlay gradient to make text more readable */}
     <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 pointer-events-none" />
