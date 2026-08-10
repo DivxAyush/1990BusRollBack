@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "1990-Bus",
+  title: "1990 Bus RollBack",
   description: "A nostalgic 1990s vintage bus music player experience",
 };
 
