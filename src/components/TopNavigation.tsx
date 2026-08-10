@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { PlayCircle } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function TopNavigation() {
   const [time, setTime] = useState("");
-
   const [mounted, setMounted] = useState(false);
+  const [onlineUsers, setOnlineUsers] = useState(1);
 
   useEffect(() => {
     setMounted(true);
@@ -25,6 +26,33 @@ export default function TopNavigation() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    // If Supabase is not configured (missing keys), we just fallback to showing 1.
+    if (!supabase) return;
+
+    // Create a random user key for this session
+    const userKey = 'user_' + Math.random().toString(36).substring(2, 9);
+    const channel = supabase.channel('public-bus-room', {
+      config: { presence: { key: userKey } },
+    });
+
+    channel
+      .on('presence', { event: 'sync' }, () => {
+        const state = channel.presenceState();
+        const count = Object.keys(state).length;
+        setOnlineUsers(Math.max(1, count));
+      })
+      .subscribe(async (status) => {
+        if (status === 'SUBSCRIBED') {
+          await channel.track({ online_at: new Date().toISOString() });
+        }
+      });
+
+    return () => {
+      supabase?.removeChannel(channel);
+    };
+  }, []);
+
   return (
     <nav className="absolute top-6 left-6 right-6 md:top-8 md:left-10 md:right-10 flex justify-between items-center z-10">
       {/* Time */}
@@ -36,7 +64,7 @@ export default function TopNavigation() {
       <div className="flex items-center gap-2 glass-panel px-4 py-1.5 rounded-full bg-white/5 border-white/10">
         <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
         <span className="text-xs font-medium text-white/90">
-          <span className="font-bold">1</span> on the highway
+          <span className="font-bold">{onlineUsers}</span> on the highway
         </span>
       </div>
 
