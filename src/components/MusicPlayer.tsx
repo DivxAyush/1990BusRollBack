@@ -124,7 +124,7 @@ export default function MusicPlayer({ onTogglePlaylist, playlistOpen }: MusicPla
      <div className="w-[50px] h-[50px] md:w-[70px] md:h-[70px] shrink-0 ml-4 md:ml-5 mr-2 md:mr-3">
       <div className={`relative w-full h-full rounded-full overflow-hidden shadow-lg border border-white/30 ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
        <Image
-        src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=100&w=600&auto=format&fit=crop"
+        src="/album_art.png"
         alt="Album Art"
         fill
         sizes="100px"
