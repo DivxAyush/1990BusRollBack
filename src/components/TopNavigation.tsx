@@ -61,10 +61,10 @@ export default function TopNavigation() {
       </div>
 
       {/* Status Badge */}
-      <div className="flex items-center gap-2 glass-panel px-4 py-1.5 rounded-full bg-white/5 border-white/10">
-        <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-        <span className="text-xs font-medium text-white/90">
-          <span className="font-bold">{onlineUsers}</span> on the highway
+      <div className="flex items-center gap-2.5 glass-panel px-5 md:px-6 py-1.5 md:py-2 rounded-full bg-white/5 border-white/10">
+        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)] shrink-0" />
+        <span className="text-[11px] md:text-xs font-medium text-white/90">
+          <span className="font-bold">{onlineUsers}</span> {onlineUsers === 1 ? 'passenger is listening' : 'passengers are listening'}
         </span>
       </div>
 
