@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
-export default function ParallaxBackground() {
+export default function ParallaxBackground({ isBhaktiMode }: { isBhaktiMode?: boolean }) {
  const bgRef = useRef<HTMLDivElement>(null);
 
  useEffect(() => {
@@ -28,15 +28,17 @@ export default function ParallaxBackground() {
     style={{ transform: "scale(1.05)" }}
    >
     <Image
-     src="/bus_rear_seat_pov.webp"
-     alt="Vintage Bus Interior"
+     src={isBhaktiMode ? "/meditative_battlefield_natural_dull.webp" : "/bus_rear_seat_pov.webp"}
+     alt="Background"
      fill
      priority
      sizes="100vw"
-     className="object-cover object-[35%_center] sm:object-center"
+     className="object-cover object-center transition-opacity duration-700"
     />
+    {/* Dark overlay to make background duller */}
+    <div className="absolute inset-0 bg-black/40 pointer-events-none" />
     {/* Subtle overlay gradient to make text more readable */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 pointer-events-none" />
+    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none" />
    </div>
   </div>
  );
