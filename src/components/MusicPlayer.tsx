@@ -32,6 +32,16 @@ export default function MusicPlayer({ onTogglePlaylist, playlistOpen, isBhaktiMo
     const [videoTitle, setVideoTitle] = useState<string>('');
     const [videoAuthor, setVideoAuthor] = useState<string>('');
 
+    // Reset state when mode changes to prevent stale data
+    useEffect(() => {
+        setVideoId('');
+        setVideoTitle('');
+        setVideoAuthor('');
+        setCurrentTime(0);
+        setDuration(0);
+        setCurrentTrackIndex(0);
+    }, [isBhaktiMode]);
+
     // Poll for time updates
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -61,10 +71,8 @@ export default function MusicPlayer({ onTogglePlaylist, playlistOpen, isBhaktiMo
 
     const onReady = (event: YouTubeEvent) => {
         setPlayer(event.target);
-        // Autoplay when mode changes (optional, but good UX if user clicked "Turn into Bhakti")
-        if (isBhaktiMode) {
-            event.target.playVideo();
-        }
+        // Autoplay when mode changes so the correct playlist starts immediately
+        event.target.playVideo();
     };
 
     const onStateChange = (event: YouTubeEvent) => {
